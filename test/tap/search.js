@@ -130,7 +130,7 @@ test('can switch to tab separated mode', function (t) {
     '_updated': now,
     bar: { name: 'bar', version: '1.0.0' },
     cool: { name: 'cool', version: '1.0.0' },
-    foo: { name: 'foo', version: '2.0.0' },
+    foo: { name: 'foo', description: 'this\thas\ttabs', version: '2.0.0' },
     other: { name: 'other', version: '1.0.0' }
   }
   var fixture = new Tacks(File(cacheContents))
@@ -143,7 +143,7 @@ test('can switch to tab separated mode', function (t) {
     '--cache', CACHE_DIR
   ], {}, function (err, code, stdout, stderr) {
     if (err) throw err
-    t.equal(stdout, 'cool\t\t\tprehistoric\t\t\nfoo\t\t\tprehistoric\t\t\n', 'no notification about no results')
+    t.equal(stdout, 'cool\t\t\tprehistoric\t\t\nfoo\tthis has tabs\t\tprehistoric\t\t\n', 'correct output, including replacing tabs in descriptions')
     t.equal(stderr, '', 'no error output')
     t.equal(code, 0, 'search gives 0 error code even if no matches')
     t.done()
